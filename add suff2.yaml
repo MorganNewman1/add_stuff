@@ -1,0 +1,59 @@
+name: add suff2
+source code: |
+  input: '00111+01011'
+  blank: ' '
+  start state: findplusR
+  table:
+   
+   findplusR:
+    1: {R: findplusR}
+    0: {R: findplusR}
+    ' ': {R: findplusR}
+    '+': {L: replaceR}
+    
+   replaceR:
+    1: {write: 0, L: findend}
+    0: {write: 1, L: replaceR}
+    
+   findend:
+     1: {R: findend}
+     0: {R: findend}
+     ' ': {L: replaceL}
+     '+': {R: findend}
+    
+   replaceL:
+      1: {write: 0, L: replaceL}
+      0: {write: 1, L: findnext}
+      
+   findnext:
+      1: { L: findspace}
+      0: {L: findspace}
+      '+': {L: check}
+      
+   findspace:
+      '+': {L: check}
+      '1': {L: findspace}
+      '0': {L: findspace}
+      ' ': {R: findplusR}
+      
+   check:
+     0: {L: check}
+     1: {L: findspace}
+     ' ': {L: clear}
+   clear:
+      0: {write: ' ', R: clear}
+      ' ': {R: clear}
+      '+': {write: ' ', R: done}
+     
+    
+   done:
+positions:
+  findplusR: {x: 53.34, y: 401.14}
+  replaceR: {x: 32.63, y: 168.5}
+  findend: {x: 232.83, y: 134.59}
+  replaceL: {x: 457.56, y: 129.43}
+  findnext: {x: 454.26, y: 333.03}
+  findspace: {x: 477.6, y: 431.35}
+  check: {x: 722.4, y: 418.28}
+  clear: {x: 615.04, y: 329.44}
+  done: {x: 681.21, y: 225.3}
